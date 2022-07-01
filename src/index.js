@@ -1,8 +1,14 @@
-import {todo, display_todo_screen, display_todo_list} from './todo.js';
+import {todo, display_todo_screen} from './todo.js';
+import {project, display_project} from './project.js';
+import {create_modal} from './utility.js';
 import './style.css';
 
-const test = todo('Jeff', 'Hi my name ', '6/30/22');
+const test1 = todo('Jeff', 'Hi my name ', '6/30/22');
+const test2 = todo('Margarita', 'Hiiiii', undefined);
 
-const test_display = display_todo_list(test);
+const testP = project('Test', [test1, test2]);
+const testP_display = display_project(testP);
 
-document.body.appendChild(test_display);
+
+let currScreen = testP_display;
+
