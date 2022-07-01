@@ -62,7 +62,7 @@ body{
   max-width: 400px;
   background-color: #efefef;
   display: grid;
-  grid-template-columns: max-content max-content 1fr;
+  grid-template-columns: max-content max-content 1fr max-content;
 }
 
 .todo-list .todo-title{
@@ -76,6 +76,15 @@ body{
 
 .todo-list .todo-title:not(.done):hover{
   text-decoration: underline;
+}
+
+.todo-list .todo-date{
+  justify-self: right;
+  color: gray;
+}
+
+.todo-list .todo-date.done{
+  text-decoration: line-through;
 }
 
 .todo-list .todo-delete{

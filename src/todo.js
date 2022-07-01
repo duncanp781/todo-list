@@ -1,10 +1,14 @@
 import {create_html, switch_screens} from './utility.js';
 import {display_project} from './project.js';
+import {format, parseISO} from 'date-fns';
 
-function todo(title, description, date = null, priority = null){
+function todo(title, description, date = new Date(), priority = null){
   function update(){
     display_todo_screen(todo);
   }
+
+  if (typeof date == 'string') date = parseISO(date);
+
   return{
     project: null,
     done: false,
@@ -30,7 +34,7 @@ function display_todo_screen(todo){
 
   const todo_title = create_html('h1', 'todo-title', todo.title);
 
-  const todo_date = create_html('div', 'todo-date', `Created: ${todo.date}`);
+  const todo_date = create_html('div', 'todo-date', `Due: ${format(todo.date, 'MM/dd/yyyy')}`);
 
   const todo_desc_container = create_html('div', 'todo-desc');
   const todo_desc_label = create_html('span', 'label', 'Description:');
@@ -55,21 +59,29 @@ function display_todo_list(todo){
     switch_screens(display_todo_screen(todo));
   });
 
+  const todo_date = create_html('span', 'todo-date', format(todo.date, 'MM/dd/yyyy'));
+
   const todo_check = create_html('input', 'todo_check', undefined);
   todo_check.setAttribute('type', 'checkbox');
   if(todo.done){
     todo_check.setAttribute('checked', 'true');
     todo_title.classList.add('done');
+    todo_date.classList.add('done')
   }
+  
   todo_check.addEventListener('change', () => {
     todo.done = !todo.done;
     if(todo.done){
       todo_title.classList.add('done');
+      todo_date.classList.add('done')
     }else{
       todo_title.classList.remove('done');
+      todo_date.classList.remove('done');
     }
   });
   
+  
+
   const todo_delete = create_html('a', 'todo-delete', 'X');
   todo_delete.addEventListener('click', () => {
     if(todo.project){
@@ -79,6 +91,7 @@ function display_todo_list(todo){
 
   container.appendChild(todo_check);
   container.appendChild(todo_title);
+  container.appendChild(todo_date);
   container.appendChild(todo_delete);
 
   return container;

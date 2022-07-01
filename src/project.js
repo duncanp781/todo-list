@@ -8,11 +8,9 @@ function project(title, todos){
   }
 
   function remove_todo(oldTodo){
-    console.log(todos);
     for(let i = 0; i < todos.length; i++){
       if(todos[i] == oldTodo){
         todos.splice(i,1);
-        console.log('found');
         out.update();
         break;
       }
@@ -30,11 +28,10 @@ function project(title, todos){
     remove_todo,
     update,
   }
+
   for (let item of todos){
     item.project = out;
   }
-  
-
   return out;
 }
 
@@ -86,6 +83,9 @@ function add_todo_form(currProject){
   const form = create_html('form', 'add-todo-form', undefined);
 
   const todo_title = create_input('text', 'add-todo-title', 'Title:');
+  todo_title.setAttribute('required', 'true');
+
+  const todo_due_date =  create_input('date', 'todo-due-date','Due Date:');
 
   const todo_desc = create_textArea('todo-desc-input', undefined, 'Description:', undefined, undefined);
 
@@ -95,13 +95,18 @@ function add_todo_form(currProject){
     e.preventDefault();
     let newTitle = document.getElementById('add-todo-title').value;
     let newDesc = document.getElementById('todo-desc-input').value;
-    const newTodo = todo(newTitle, newDesc, undefined, undefined);
+    let newDate = document.getElementById('todo-due-date').value;
+
+    if (newDate == '') newDate = undefined;
+
+    const newTodo = todo(newTitle, newDesc, newDate, undefined);
     currProject.add_todo(newTodo);
     currProject.update();
     remove_modal();
   })
 
   form.appendChild(todo_title);
+  form.appendChild(todo_due_date);
   form.appendChild(todo_desc);
   form.appendChild(submit);
 
