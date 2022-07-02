@@ -1,10 +1,12 @@
 import {todo, display_todo_list} from './todo.js';
-import {create_html, switch_screens, create_input, create_textArea, create_modal, remove_modal, create_select} from './utility.js';
+import {create_html} from './utility.js';
+import{add_todo_form} from './todoForm.js';
 
 function project(title, todos){
   function add_todo(newTodo){
     todos.push(newTodo);
     newTodo.project = out;
+    update();
   }
 
   function remove_todo(oldTodo){
@@ -12,6 +14,21 @@ function project(title, todos){
       if(todos[i] == oldTodo){
         todos.splice(i,1);
         out.update();
+        break;
+      }
+    }
+  }
+
+  //If a project receives a new todo, it simply adds it
+  function receive(newTodo){
+    add_todo(newTodo);
+  }
+
+  function modify_todo(oldTodo, newTodo){
+    for(let i = 0; i < todos.length; i++){
+      if(todos[i] == oldTodo){
+        todos[i] = newTodo;
+        todos[i].project = out;
         break;
       }
     }
@@ -26,7 +43,9 @@ function project(title, todos){
     todos,
     add_todo,
     remove_todo,
+    modify_todo,
     update,
+    receive,
   }
 
   for (let item of todos){
@@ -69,77 +88,15 @@ function add_todo_button(currProject){
   container.classList.add('todo-list');
 
   const add_button = create_html('a', 'add-todo-button', '+');
-  add_button.addEventListener('click', () => add_todo_form(currProject));
+  add_button.addEventListener('click', () => {
+    add_todo_form(currProject, currProject);
+  });
 
   const desc = create_html('span', 'add-button-desc', 'Add a Todo');
 
   container.appendChild(add_button);
   container.appendChild(desc);
-
   return container;
 }
-
-function add_todo_form(currProject, defTitle = null, defDate = null, defDesc = null){
-  const modal = create_modal(); 
-
-  const form = create_html('form', 'add-todo-form', undefined);
-
-  const todo_title = create_input('text', 'add-todo-title', 'Title:');
-
-
-
-  const todo_due_date =  create_input('date', 'todo-due-date','Due Date:');
-
-
-  const todo_desc = create_textArea('todo-desc-input', undefined, 'Description:', undefined, undefined);
-
-  const todo_prio = create_select('todo-select-prio', 'Select Priority:', ['none', 'None'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']);
-  
-  const submit = create_html('button', 'submit-todo-form', 'Create');
-  submit.setAttribute('type', 'submit');
-  submit.addEventListener('click', (e) => {
-    const form = document.querySelector('.add-todo-form');
-    let valid = form.checkValidity();
-
-    if(valid){
-      e.preventDefault();
-
-
-      let newTitle = document.getElementById('add-todo-title').value;
-      let newDesc = document.getElementById('todo-desc-input').value;
-      let newDate = document.getElementById('todo-due-date').value;
-      let newPrio = document.getElementById('todo-select-prio').value;
-
-      if (newDate == '') newDate = undefined;
-
-      const newTodo = todo(newTitle, newDesc, newDate, newPrio);
-      currProject.add_todo(newTodo);
-      currProject.update();
-      remove_modal();
-    }
-  })
-
-  form.appendChild(todo_title);
-  form.appendChild(todo_due_date);
-  form.appendChild(todo_prio);
-  form.appendChild(todo_desc);
-  form.appendChild(submit);
-
-  modal.appendChild(form);
-
-  const todo_title_input = document.getElementById('add-todo-title');
-  todo_title_input.setAttribute('required', 'true');
-  if(defTitle) todo_title_input.value = defTitle;
-
-  const todo_due_date_input = document.getElementById('todo-due-date')
-  if(defDate) todo_due_date_input.value = defDate;
-
-  const todo_desc_input = document.getElementById('todo-desc-input');
-  if(defDesc) todo_desc_input.value = defDesc;
-
-  return modal;
-
-}
-
 
 export {project, display_project}

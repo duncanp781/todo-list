@@ -70,9 +70,7 @@ function create_project(){
 
     if(valid){
       e.preventDefault();
-       const newTitle = document.getElementById('create-project-title').value;
-
-
+      const newTitle = document.getElementById('create-project-title').value;
       const newProject = project(newTitle, []);
       sidebar.add_project(newProject);
 
