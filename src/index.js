@@ -16,4 +16,3 @@ sidebar.add_project(testP2);
 
 const sideB = display_sidebar();
 
-document.body.appendChild(sideB);
