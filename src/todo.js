@@ -68,7 +68,7 @@ function display_todo_list(todo){
     todo_title.classList.add('done');
     todo_date.classList.add('done')
   }
-  
+
   todo_check.addEventListener('change', () => {
     todo.done = !todo.done;
     if(todo.done){
@@ -97,8 +97,6 @@ function display_todo_list(todo){
   return container;
 
 }
-
-
 
 
 export{todo, display_todo_screen, display_todo_list}

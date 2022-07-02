@@ -52,10 +52,11 @@ function display_project(currProject){
   }
 
   const todo_button = add_todo_button(currProject);
+  todo_container.appendChild(todo_button);
 
   container.appendChild(project_title);
   container.appendChild(todo_container);
-  container.appendChild(todo_button);
+
 
 
   document.body.appendChild(container); 
@@ -65,6 +66,7 @@ function display_project(currProject){
 
 function add_todo_button(currProject){
   const container = create_html('div', 'add-todo', undefined);
+  container.classList.add('todo-list');
 
   const add_button = create_html('a', 'add-todo-button', '+');
   add_button.addEventListener('click', () => add_todo_form(currProject));
