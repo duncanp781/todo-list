@@ -56,7 +56,7 @@ body{
 .todo-screen{
   background-color: #eaeaea;
   display: grid;
-  grid-template-rows: max-content max-content max-content 1fr;
+  grid-template-rows: repeat(4, max-content) 1fr;
   height: fit-content;
   padding: 32px;
   height: 600px;
@@ -64,6 +64,10 @@ body{
 }
 
 .todo-screen .todo-back{
+  text-align: right;
+}
+
+.todo-screen .todo-prio{
   text-align: right;
 }
 
@@ -87,6 +91,7 @@ body{
   background-color: #efefef;
   display: grid;
   grid-template-columns: max-content max-content 1fr max-content;
+  align-items: center;
 }
 
 .todo-list .todo-title{
@@ -95,11 +100,23 @@ body{
 
 .todo-list .todo-title.done{
   text-decoration: line-through;
-  color: red;
+  color: gray;
 }
 
 .todo-list .todo-title:not(.done):hover{
   text-decoration: underline;
+}
+
+.todo-list.low{
+  background-color: rgb(255, 255, 160);
+}
+
+.todo-list.medium{
+  background-color: yellow;
+}
+
+.todo-list.high{
+  background-color: red;
 }
 
 .todo-list .todo-date{
@@ -136,13 +153,15 @@ body{
   gap: 8px;
 }  
 
-.input-container{
+.input-container,
+.select-container{
   display: flex;
   justify-content: flex-start;
   gap: 16px;
 }
 
-.input-container label{
+.input-container label,
+.select-container label{
   font-weight: bold;
 }
 

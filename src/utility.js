@@ -75,4 +75,28 @@ function create_textArea(id, name = null, label = null, rows = '4', cols = '50')
 
 }
 
-export {create_html, switch_screens, create_modal, remove_modal, create_input, create_textArea}
+//Options are [value, text] pairs
+function create_select(id, label, ...options){
+
+  const container = create_html('div', 'select-container', undefined);
+
+  
+  const select = create_html('select', undefined, undefined);
+  select.setAttribute('id', id);
+
+  for (let [value, text] of options){
+    const option = create_html('option', undefined, text);
+    option.setAttribute('value', value);
+    select.appendChild(option);
+  }
+
+  const selectLabel = create_html('label', 'label', label)
+  selectLabel.setAttribute('for', id);
+
+  container.appendChild(selectLabel);
+  container.appendChild(select);
+
+  return container;
+}
+
+export {create_html, switch_screens, create_modal, remove_modal, create_input, create_textArea, create_select}

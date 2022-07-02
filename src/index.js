@@ -1,6 +1,5 @@
-import {todo, display_todo_screen} from './todo.js';
-import {project, display_project} from './project.js';
-import {create_modal} from './utility.js';
+import {todo} from './todo.js';
+import {project} from './project.js';
 import './style.css';
 import {sidebar, display_sidebar} from './sidebar.js';
 
