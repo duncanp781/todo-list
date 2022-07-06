@@ -3,6 +3,7 @@ import { display_project } from "./project.js";
 import { format, parseISO } from "date-fns";
 import { add_todo_form } from "./todoForm.js";
 import { storage_add_todo } from "./manageStorage.js";
+import closeIcon from  './close.svg';
 
 function todo(title, description, date = new Date(), priority = null) {
   function update() {
@@ -42,7 +43,9 @@ function display_todo_screen(todoDisplay) {
   const container = create_html("div", "todo-screen", undefined);
   container.classList.add("screen");
 
-  const todo_back = create_html("a", "todo-back", "X");
+  const todo_back = new Image();
+  todo_back.src = closeIcon;
+  todo_back.classList.add('todo-back');
   todo_back.addEventListener("click", () => {
     if (todoDisplay.project != null) {
       switch_screens(display_project(todoDisplay.project));
@@ -122,7 +125,9 @@ function display_todo_list(todo) {
     }
   });
 
-  const todo_delete = create_html("a", "todo-delete", "X");
+  const todo_delete = new Image();
+  todo_delete.src = closeIcon;
+  todo_delete.classList.add('todo-delete');
   todo_delete.addEventListener("click", () => {
     if (todo.project) {
       todo.project.remove_todo(todo);

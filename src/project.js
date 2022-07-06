@@ -6,6 +6,8 @@ import {
   storage_add_todo,
   storage_remove_todo,
 } from "./manageStorage.js";
+import addIcon from './add.svg';
+
 
 function project(title, todos = []) {
   function add_todo(newTodo) {
@@ -92,8 +94,11 @@ function add_todo_button(currProject) {
   const container = create_html("div", "add-todo", undefined);
   container.classList.add("todo-list");
 
-  const add_button = create_html("a", "add-todo-button", "+");
-  add_button.addEventListener("click", () => {
+
+  const add_button = new Image();
+  add_button.src = addIcon;
+  add_button.classList.add('add-todo-button');
+  container.addEventListener("click", () => {
     add_todo_form(currProject, currProject);
   });
 

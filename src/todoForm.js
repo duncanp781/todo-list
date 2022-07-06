@@ -8,6 +8,7 @@ import {
 } from "./utility.js";
 import { todo } from "./todo.js";
 import { format } from "date-fns";
+import { el } from "date-fns/locale";
 
 //TODO FORM: INPUT: STARTING TODO, OUTPUT: VOID
 //TO BE USED: OBJECT MUST IMPLEMENT .RECEIVE METHOD
@@ -67,7 +68,12 @@ function add_todo_form(startTodo = null, caller) {
 
   const todo_title_input = document.getElementById("add-todo-title");
   todo_title_input.setAttribute("required", "true");
-  if (startTodo.title) todo_title_input.value = startTodo.title;
+  if (startTodo.title) {
+    todo_title_input.value = startTodo.title;
+  }else{
+    todo_title_input.value = '';
+  }
+
   const todo_due_date_input = document.getElementById("todo-due-date");
 
   if (startTodo.date) {
